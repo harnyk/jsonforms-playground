@@ -1,0 +1,228 @@
+directive @auth(action: ActionType!) on FIELD | FIELD_DEFINITION | OBJECT
+
+enum ActionType {
+  ACCEPT
+  ARCHIVE
+  CANCEL
+  CREATE
+  FILTER_BY_CONTACT
+  FILTER_BY_PROPERTY
+  REFUSE
+  UPDATE
+  VIEW
+}
+
+input ContactOffersFilter {
+  """True - only active offers, false - only archived offers"""
+  archived: Boolean!
+
+  """Filter by contact id"""
+  contactId: ID!
+}
+
+type ContactStats {
+  _id: ID!
+  closestOfferExpirations: [DateTime!]!
+  createdAt: DateTime!
+  currency: Currency!
+  hasAcceptedOffer: Boolean!
+  highestOfferBid: Float!
+  numberOfPendingOffers: Float!
+  updatedAt: DateTime!
+}
+
+input ContactStatsFilter {
+  contactId: ID!
+}
+
+input CreateOfferInput {
+  buyers: [ID!]!
+  financialDetails: FinancialDetailsInput!
+  notes: String
+  owners: [ID!]!
+  parentId: String
+  propertyId: ID!
+  validUntil: DateTime
+}
+
+scalar Currency
+
+scalar DateTime
+
+type FinancialDetails {
+  """Owner Net Amount"""
+  agencyTotalFee: Float!
+
+  """Buyer Fee Fixed"""
+  buyerFixedFee: Float!
+
+  """Buyer Gross Amount"""
+  buyerGrossAmount: Float!
+
+  """Buyer Fee Percentage"""
+  buyerPercentageFee: Float!
+
+  """Buyer Total Fee"""
+  buyerTotalFee: Float!
+
+  """Currency"""
+  currency: Currency!
+
+  """Direction"""
+  direction: OfferDirection!
+
+  """Owner Fee Fixed"""
+  ownerFixedFee: Float!
+
+  """Owner Gross Amount"""
+  ownerNetAmount: Float!
+
+  """Owner Fee Percentage"""
+  ownerPercentageFee: Float!
+
+  """Owner Total Fee"""
+  ownerTotalFee: Float!
+
+  """Transaction Amount"""
+  transactionAmount: Float!
+}
+
+input FinancialDetailsInput {
+  buyerFixedFee: Float!
+  buyerGrossAmount: Float
+  buyerPercentageFee: Float!
+  currency: Currency!
+  direction: OfferDirection!
+  ownerFixedFee: Float!
+  ownerNetAmount: Float
+  ownerPercentageFee: Float!
+}
+
+type Mutation {
+  acceptOffer(offerId: ID!): Offer!
+  archiveOffer(offerId: ID!): Offer!
+  cancelOffer(offerId: ID!): Offer!
+  createOffer(offerInput: CreateOfferInput!): Offer!
+  refuseOffer(offerId: ID!): Offer!
+  restoreOffer(offerId: ID!): Offer!
+  updateOffer(offerInput: UpdateOfferInput!): Offer!
+}
+
+type Offer {
+  """Accepted At"""
+  acceptedAt: DateTime
+
+  """Archived At"""
+  archivedAt: DateTime
+
+  """Buyers"""
+  buyers: [OfferContact!]!
+
+  """Cancelled At"""
+  cancelledAt: DateTime
+
+  """Company ID"""
+  companyId: ID!
+
+  """Created At"""
+  createdAt: DateTime!
+
+  """Created By"""
+  createdBy: ID!
+
+  """Offer Financial Details"""
+  financialDetails: FinancialDetails!
+
+  """Offer ID"""
+  id: ID
+
+  """Notes"""
+  notes: String
+
+  """Owners"""
+  owners: [OfferContact!]!
+
+  """Parent Offer Id"""
+  parentId: String
+
+  """Property ID"""
+  propertyId: ID!
+
+  """Refused At"""
+  refusedAt: DateTime
+
+  """Offer Status"""
+  status: OfferStatus!
+
+  """Updated At"""
+  updatedAt: DateTime
+
+  """Valid Until"""
+  validUntil: DateTime
+}
+
+type OfferContact {
+  id: ID!
+}
+
+enum OfferDirection {
+  BUYER_TO_OWNER
+  OWNER_TO_BUYER
+}
+
+enum OfferStatus {
+  ACCEPTED
+  CANCELLED
+  PENDING
+  REFUSED
+}
+
+input PropertyOffersFilter {
+  """True - only active offers, false - only archived offers"""
+  archived: Boolean!
+
+  """Filter by property id"""
+  propertyId: ID!
+}
+
+type PropertyStats {
+  _id: ID!
+  closestOfferExpirations: [DateTime!]!
+  createdAt: DateTime!
+  currency: Currency!
+  hasAcceptedOffer: Boolean!
+  highestOfferBid: Float!
+  numberOfPendingOffers: Float!
+  updatedAt: DateTime!
+}
+
+input PropertyStatsFilter {
+  propertyId: ID!
+}
+
+type Query {
+  """Get contact offers"""
+  contactOffers(filter: ContactOffersFilter!): [Offer!]!
+
+  """Get statistics for a contact"""
+  contactStats(filter: ContactStatsFilter!): ContactStats
+
+  """Get offer by id"""
+  offer(offerId: ID!): Offer
+
+  """Get property offers"""
+  propertyOffers(filter: PropertyOffersFilter!): [Offer!]!
+
+  """Get statistics for a property"""
+  propertyStats(filter: PropertyStatsFilter!): PropertyStats
+  version: String!
+}
+
+input UpdateOfferInput {
+  buyers: [ID!]
+  financialDetails: FinancialDetailsInput
+  id: ID!
+  notes: String
+  owners: [ID!]
+  validUntil: DateTime
+}

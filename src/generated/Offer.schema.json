@@ -1,0 +1,225 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "OfferDirection": {
+            "enum": [
+                "BUYER_TO_OWNER",
+                "OWNER_TO_BUYER"
+            ],
+            "type": "string"
+        },
+        "OfferStatus": {
+            "enum": [
+                "ACCEPTED",
+                "CANCELLED",
+                "PENDING",
+                "REFUSED"
+            ],
+            "type": "string"
+        }
+    },
+    "properties": {
+        "__typename": {
+            "enum": [
+                "Offer"
+            ],
+            "type": "string"
+        },
+        "acceptedAt": {
+            "description": "Accepted At",
+            "format": "date-time",
+            "type": "string"
+        },
+        "archivedAt": {
+            "description": "Archived At",
+            "format": "date-time",
+            "type": "string"
+        },
+        "buyers": {
+            "description": "Buyers",
+            "items": {
+                "properties": {
+                    "__typename": {
+                        "enum": [
+                            "OfferContact"
+                        ],
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "id"
+                ],
+                "type": "object"
+            },
+            "type": "array"
+        },
+        "cancelledAt": {
+            "description": "Cancelled At",
+            "format": "date-time",
+            "type": "string"
+        },
+        "companyId": {
+            "description": "Company ID",
+            "type": "string"
+        },
+        "createdAt": {
+            "description": "Created At",
+            "format": "date-time",
+            "type": "string"
+        },
+        "createdBy": {
+            "description": "Created By",
+            "type": "string"
+        },
+        "financialDetails": {
+            "description": "Offer Financial Details",
+            "properties": {
+                "__typename": {
+                    "enum": [
+                        "FinancialDetails"
+                    ],
+                    "type": "string"
+                },
+                "agencyTotalFee": {
+                    "description": "Owner Net Amount",
+                    "type": "number"
+                },
+                "buyerFixedFee": {
+                    "description": "Buyer Fee Fixed",
+                    "type": "number"
+                },
+                "buyerGrossAmount": {
+                    "description": "Buyer Gross Amount",
+                    "type": "number"
+                },
+                "buyerPercentageFee": {
+                    "description": "Buyer Fee Percentage",
+                    "type": "number"
+                },
+                "buyerTotalFee": {
+                    "description": "Buyer Total Fee",
+                    "type": "number"
+                },
+                "currency": {
+                    "description": "Currency",
+                    "enum": [
+                        "EUR",
+                        "GBP",
+                        "USD"
+                    ],
+                    "type": "string"
+                },
+                "direction": {
+                    "$ref": "#/definitions/OfferDirection",
+                    "description": "Direction"
+                },
+                "ownerFixedFee": {
+                    "description": "Owner Fee Fixed",
+                    "type": "number"
+                },
+                "ownerNetAmount": {
+                    "description": "Owner Gross Amount",
+                    "type": "number"
+                },
+                "ownerPercentageFee": {
+                    "description": "Owner Fee Percentage",
+                    "type": "number"
+                },
+                "ownerTotalFee": {
+                    "description": "Owner Total Fee",
+                    "type": "number"
+                },
+                "transactionAmount": {
+                    "description": "Transaction Amount",
+                    "type": "number"
+                }
+            },
+            "required": [
+                "agencyTotalFee",
+                "buyerFixedFee",
+                "buyerGrossAmount",
+                "buyerPercentageFee",
+                "buyerTotalFee",
+                "currency",
+                "direction",
+                "ownerFixedFee",
+                "ownerNetAmount",
+                "ownerPercentageFee",
+                "ownerTotalFee",
+                "transactionAmount"
+            ],
+            "type": "object"
+        },
+        "id": {
+            "description": "Offer ID",
+            "type": "string"
+        },
+        "notes": {
+            "description": "Notes",
+            "type": "string"
+        },
+        "owners": {
+            "description": "Owners",
+            "items": {
+                "properties": {
+                    "__typename": {
+                        "enum": [
+                            "OfferContact"
+                        ],
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "id"
+                ],
+                "type": "object"
+            },
+            "type": "array"
+        },
+        "parentId": {
+            "description": "Parent Offer Id",
+            "type": "string"
+        },
+        "propertyId": {
+            "description": "Property ID",
+            "type": "string"
+        },
+        "refusedAt": {
+            "description": "Refused At",
+            "format": "date-time",
+            "type": "string"
+        },
+        "status": {
+            "$ref": "#/definitions/OfferStatus",
+            "description": "Offer Status"
+        },
+        "updatedAt": {
+            "description": "Updated At",
+            "format": "date-time",
+            "type": "string"
+        },
+        "validUntil": {
+            "description": "Valid Until",
+            "format": "date-time",
+            "type": "string"
+        }
+    },
+    "required": [
+        "buyers",
+        "companyId",
+        "createdAt",
+        "createdBy",
+        "financialDetails",
+        "owners",
+        "propertyId",
+        "status"
+    ],
+    "type": "object"
+}
+

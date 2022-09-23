@@ -1,0 +1,89 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "OfferDirection": {
+            "enum": [
+                "BUYER_TO_OWNER",
+                "OWNER_TO_BUYER"
+            ],
+            "type": "string"
+        }
+    },
+    "properties": {
+        "buyers": {
+            "items": {
+                "type": "string"
+            },
+            "type": "array"
+        },
+        "financialDetails": {
+            "properties": {
+                "buyerFixedFee": {
+                    "type": "number"
+                },
+                "buyerGrossAmount": {
+                    "type": "number"
+                },
+                "buyerPercentageFee": {
+                    "type": "number"
+                },
+                "currency": {
+                    "enum": [
+                        "EUR",
+                        "GBP",
+                        "USD"
+                    ],
+                    "type": "string"
+                },
+                "direction": {
+                    "$ref": "#/definitions/OfferDirection"
+                },
+                "ownerFixedFee": {
+                    "type": "number"
+                },
+                "ownerNetAmount": {
+                    "type": "number"
+                },
+                "ownerPercentageFee": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "buyerFixedFee",
+                "buyerPercentageFee",
+                "currency",
+                "direction",
+                "ownerFixedFee",
+                "ownerPercentageFee"
+            ],
+            "type": "object"
+        },
+        "notes": {
+            "type": "string"
+        },
+        "owners": {
+            "items": {
+                "type": "string"
+            },
+            "type": "array"
+        },
+        "parentId": {
+            "type": "string"
+        },
+        "propertyId": {
+            "type": "string"
+        },
+        "validUntil": {
+            "format": "date-time",
+            "type": "string"
+        }
+    },
+    "required": [
+        "buyers",
+        "financialDetails",
+        "owners",
+        "propertyId"
+    ],
+    "type": "object"
+}
+

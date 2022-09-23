@@ -1,0 +1,11 @@
+schema: src/generated/schema.graphql
+
+generates:
+  src/generated/types.ts:
+    plugins:
+      - typescript
+    # map scalars to types
+    config:
+      scalars:
+        DateTime: Date
+        Currency: "'USD' | 'EUR' | 'GBP'"
